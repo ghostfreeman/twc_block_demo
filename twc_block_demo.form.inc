@@ -75,7 +75,7 @@ function twc_block_demo_form_save_message($user_id, $message) {
     //Record exists, we need to do an UPDATE call
     $result = db_update('login_messages')
       ->fields(array(
-          'message' => $message
+          'message' => $message,
         )
       )
       ->condition('user_id', $user_id, '=')
