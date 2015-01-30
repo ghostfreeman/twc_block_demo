@@ -4,17 +4,6 @@
  * Main logic file for the module
  */
 
-/*
- * TODO
- * 1.    -Display a block that shows the time the user last logged in with a message of “You last logged in at “-
- * 2.    -In the user’s current time-zone-
- * 3.    -Have the block automatically be placed in left siderail region (if available) (Bartik and Garland only)-
- * 4.    -Make sure that the block is not visible for non-logged in users.-
- * 5.    Make this a panels content type instead of a block
- * 6.    -Allow the message to be configured per user - display a different message per user.-
- * 7.    -Frontend Javascript should collapse (animated) the block after 10 seconds.-
- */
-
 /**
  * Implements hook_menu()
  */
@@ -53,11 +42,20 @@ function twc_block_demo_block_view($delta = '') {
   switch($delta) {
     case "user_last_login":
       $block['subject'] = t("Welcome");
-      $block['content'] = twc_block_demo_output(); //TODO
+      $block['content'] = twc_block_demo_output();
       break;
   }
 
   return $block;
+}
+
+/**
+ * Implements hook_ctools_plugin_directory()
+ */
+function twc_block_demo_ctools_plugin_directory($owner, $plugin_type) {
+  if ($owner == 'ctools' && $plugin_type == 'content_types') {
+    return 'plugins/ctype';
+  }
 }
 
 /**
@@ -67,7 +65,6 @@ function twc_block_demo_block_view($delta = '') {
  */
 function twc_block_demo_output() {
   global $user;
-  dpm($user, "User");
 
   // If the User has the role of "Authenticated User", run the time gathering
   // logic. Otherwise, exit and return null item.

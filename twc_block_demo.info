@@ -2,4 +2,5 @@ name = Block Example Module
 description = Implements a "Last logged in" setting on your Drupal site.
 core = 7.x
 package = Custom
+dependencies[] = ctools
 scripts[] = js/twc_block_demo.js
