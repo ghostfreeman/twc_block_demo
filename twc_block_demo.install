@@ -5,7 +5,7 @@
  */
 
 /**
- * Implements hook_schema
+ * Implements hook_schema()
  */
 function twc_block_demo_schema() {
   $schema['login_messages'] = array(
@@ -41,14 +41,14 @@ function twc_block_demo_schema() {
 }
 
 /**
- * Implements hook_install
+ * Implements hook_install()
  */
 function twc_block_demo_install() {
   drupal_install_schema("login_messages");
 }
 
 /**
- * Implements hook_uninstall
+ * Implements hook_uninstall()
  */
 function twc_block_demo_uninstall() {
   drupal_uninstall_schema("login_messages");
