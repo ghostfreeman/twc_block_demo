@@ -1,0 +1,49 @@
+<?php
+/**
+ * @file
+ * Implements the database table for all Welcome messages per user IDs
+ */
+
+/**
+ * Implements hook_schema
+ */
+function twc_block_demo_schema() {
+  $schema['login_messages'] = array(
+    'description' => t("The base table for all login message entries"),
+    'fields' => array(
+      'id' => array(
+        'description' => t('Primary Key'),
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'user_id' => array(
+        'description' => t('The User ID for which the message should relate.'),
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'message' => array(
+        'description' => t('The message of the aforementioned User ID'),
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+    )
+  );
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install
+ */
+function twc_block_demo_install() {
+  drupal_install_schema("login_messages");
+}
+
+/**
+ * Implements hook_uninstall
+ */
+function twc_hook_demo_uninstall() {
+  drupal_install_schema("login_messages");
+}

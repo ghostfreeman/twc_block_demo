@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ * Main logic file for the module
+ */
+
+/**
+ * Implement hook_block_info()
+ */
+function twc_block_demo_block_info() {
+  $blocks['user_last_login'] = array(
+    'info' => t("User last login"),
+    'cache' => DRUPAL_CACHE_PER_ROLE,
+    //'region'
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view()
+ */
+function twc_block_demo_block_view($delta = '') {
+  $block = array();
+
+  switch($delta) {
+    case "user_last_login":
+      $block['subject'] = t("Welcome");
+      $block['content'] = ""; //TODO
+      break;
+  }
+
+  return $block;
+}
