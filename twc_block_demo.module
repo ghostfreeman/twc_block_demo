@@ -7,12 +7,12 @@
 /*
  * TODO
  * 1.    -Display a block that shows the time the user last logged in with a message of “You last logged in at “-
- * 2.    In the user’s current time-zone
+ * 2.    -In the user’s current time-zone-
  * 3.    -Have the block automatically be placed in left siderail region (if available) (Bartik and Garland only)-
  * 4.    -Make sure that the block is not visible for non-logged in users.-
  * 5.    Make this a panels content type instead of a block
  * 6.    -Allow the message to be configured per user - display a different message per user.-
- * 7.    Frontend Javascript should collapse (animated) the block after 10 seconds.
+ * 7.    -Frontend Javascript should collapse (animated) the block after 10 seconds.-
  */
 
 /**
@@ -67,6 +67,7 @@ function twc_block_demo_block_view($delta = '') {
  */
 function twc_block_demo_output() {
   global $user;
+  dpm($user, "User");
 
   // If the User has the role of "Authenticated User", run the time gathering
   // logic. Otherwise, exit and return null item.
@@ -121,6 +122,9 @@ function twc_block_demo_get_custom_welcome_message($user_id) {
  * @return [type]                  [description]
  */
 function twc_block_demo_format_time($user_login_time) {
+  global $user;
   // Return a human readable date when the user logged in
-  return gmdate("g:i a", $user_login_time) . " on " . gmdate("F j Y", $user_login_time) . "<br />" . l('Edit this text', 'settings/welcome');
+  return format_date($user_login_time, "custom", "g:i a", $user->timezone) .
+    " on " . format_date($user_login_time, "custom", "F j Y", $user->timezone) . "<br />" .
+    l('Edit this text', 'settings/welcome');
 }
