@@ -16,8 +16,19 @@
  */
 
 /**
- * Implements hook_menu()ß
+ * Implements hook_menu()
  */
+function twc_block_demo() {
+  $items['settings/welcome'] = array(
+    'title' => t('Welcome Message Settings'),
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'drupal_get_form',
+    'page arguments' => 'twc_block_demo_form',
+    'file' => 'twc_block_demo.form.inc'
+  );
+
+  return $items;
+}
 
 /**
  * Implement hook_block_info()
@@ -41,19 +52,12 @@ function twc_block_demo_block_view($delta = '') {
   switch($delta) {
     case "user_last_login":
       $block['subject'] = t("Welcome");
-      $block['content'] = ""; //TODO
+      $block['content'] = twc_block_demo_output(); //TODO
       break;
   }
 
   return $block;
 }
-
-/**
- * Implements hook_theme()
- */
-/*function twc_block_demo_theme($existing, $type, $theme, $path) {
-
-}*/
 
 /**
  * This is the actual display logic for the block in question. It will return
@@ -64,6 +68,14 @@ function twc_block_demo_output() {
   global $user;
 
   dpm($user, "User Object");
+
+  // If the User has the role of "Authenticated User", run the time gathering
+  // logic. Otherwise, exit and return null item.
+  if(in_array("authenticated user", $user->roles) ) {
+    return "Found";
+  } else {
+    return null;
+  }
 }
 
 /**
@@ -72,5 +84,36 @@ function twc_block_demo_output() {
  * from a timestamp value to a human readable value (fuzzy)
  */
 function twc_block_demo_return_last_login_time($user) {
-  //global $user;
+  // Look up the database to see if a user has a custom message and use it
+  // else, fall back and use the default
+  $results = twc_block_demo_get_custom_welcome_message($user->uid);
+
+  if(sizeof($results) > 0) {
+    //TODO
+  } else {
+    $message = "You last logged in at ";
+  }
+
+  //Friendly format the last time logged in
+  $last_logged_in = twc_block_demo_format_time($user->login);
+}
+
+/**
+ * TODO documentation
+ * @param  [type] $user_id [description]
+ * @return [type]          [description]
+ */
+function twc_block_demo_get_custom_welcome_message($user_id) {
+
+}
+
+/**
+ * TODO Documentation
+ * @param  [type] $user_login_time [description]
+ * @return [type]                  [description]
+ */
+function twc_block_demo_format_time($user_login_time) {
+  // Return a human readable date when the user logged in
+
+
 }
