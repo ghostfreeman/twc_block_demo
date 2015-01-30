@@ -20,15 +20,21 @@ function twc_block_demo_schema() {
       'user_id' => array(
         'description' => t('The User ID for which the message should relate.'),
         'type' => 'int',
-        'unsigned' => TRUE,
-        'not null' => TRUE,
+        'not null' => FALSE,
       ),
       'message' => array(
         'description' => t('The message of the aforementioned User ID'),
         'type' => 'text',
         'not null' => FALSE,
       ),
-    )
+    ),
+    'indexes' => array(
+      'id' => array('id'),
+    ),
+    'unique keys' => array(
+      'user_id' => array('user_id'),
+    ),
+    'primary key' => array('id'),
   );
 
   return $schema;
@@ -44,6 +50,6 @@ function twc_block_demo_install() {
 /**
  * Implements hook_uninstall
  */
-function twc_hook_demo_uninstall() {
-  drupal_install_schema("login_messages");
+function twc_block_demo_uninstall() {
+  drupal_uninstall_schema("login_messages");
 }
